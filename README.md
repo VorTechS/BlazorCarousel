@@ -27,14 +27,6 @@ For the old carousel, add the following line to create an instance:
 The ImageFile can either have FileContent (the image bytes) or a Url specified.
 The sample project contains examples of both in the CarouselSample.razor page
 
-For the templated carousel, add lines similar to the following:
-
-    <TemplatedCarousel Items="AssetImages" TItem="ImageFile">
-        <ItemTemplate>
-            <img class="center" src="@GetImageSource(@context)" alt="@context.FileName">
-        </ItemTemplate>
-    </TemplatedCarousel>
-
 
 ###### Current Carousel Parameters:
 
@@ -49,6 +41,17 @@ OnCarouselItemClicked: event handler for when an item is clicked (also changes t
 AutoScrollInterval: the number of seconds to elapse before the next image in the sequence is displayed automatically
 
 ShowNavigation: (Defaulted to true) allows the bottom navigation panel to be displayed or hidden
+
+
+
+For the templated carousel, add lines similar to the following:
+
+    <TemplatedCarousel Items="AssetImages" TItem="ImageFile">
+        <ItemTemplate>
+            <img class="center" src="@GetImageSource(@context)" alt="@context.FileName">
+        </ItemTemplate>
+    </TemplatedCarousel>
+
 
 ###### Current TemplatedCarousel Parameters:
 
