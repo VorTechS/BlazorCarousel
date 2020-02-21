@@ -1,0 +1,91 @@
+﻿@page "/templatedcarousel"
+
+@using Components;
+@using System.Collections;
+@using System.IO;
+@using MimeMapping;
+@using Microsoft.AspNetCore.Hosting;
+
+@inject IWebHostEnvironment Environment
+
+<div class="mt-3">
+    <label>Templated Carousel with only Items set:</label><span class="ml-2 "></span>
+    <TemplatedCarousel Items="AssetImages" TItem="ImageFile">
+        <ItemTemplate>
+            <img class="center" src="@GetImageSource(@context)" alt="@context.FileName">
+        </ItemTemplate>
+    </TemplatedCarousel>
+</div>
+
+<div class="mt-3">
+    <label>Templated Carousel with Items and OnCarouselItemClicked set:</label><span class="ml-2 "></span>
+    <TemplatedCarousel Items="AssetImages" TItem="ImageFile" OnCarouselItemClicked="OnCarouselItemClicked">
+        <ItemTemplate>
+            <img class="d-block center" src="@GetImageSource(@context)" alt="@context.FileName">
+        </ItemTemplate>
+    </TemplatedCarousel>
+</div>
+
+<div class="mt-3">
+    <label>Templated Carousel with Items, AutoScrollInterval and OnCarouselItemClicked set:</label><span class="ml-2 "></span>
+    <TemplatedCarousel Items="AssetImages" TItem="ImageFile" AutoScrollInterval="5" OnCarouselItemClicked="OnCarouselItemClicked">
+        <ItemTemplate>
+            <img class="d-block center" src="@GetImageSource(@context)" alt="@context.FileName">
+        </ItemTemplate>
+    </TemplatedCarousel>
+</div>
+
+<div class="mt-3 mb-3">
+    <label>Templated Carousel with Items, AutoScrollInterval and OnCarouselItemClicked set, but Navigation turned off:</label><span class="ml-2 "></span>
+    <TemplatedCarousel Items="AssetImages" TItem="ImageFile" AutoScrollInterval="5" OnCarouselItemClicked="OnCarouselItemClicked" ShowNavigation="false">
+        <ItemTemplate>
+            <img class="d-block center" src="@GetImageSource(@context)" alt="@context.FileName">
+        </ItemTemplate>
+    </TemplatedCarousel>
+</div>
+
+@code
+{
+    List<ImageFile> AssetImages
+    {
+        get
+        {
+            List<ImageFile> imagesToReturn = new List<ImageFile>();
+
+            var assetFiles = Environment.WebRootFileProvider.GetDirectoryContents("Assets");
+
+            foreach (var assetFile in assetFiles)
+            {
+                ImageFile imageFile = new ImageFile()
+                {
+                    FileName = assetFile.Name,
+                    MimeType = MimeMapping.MimeUtility.GetMimeMapping(assetFile.Name)
+                };
+
+                imageFile.FileContent = File.ReadAllBytes(assetFile.PhysicalPath);
+                imagesToReturn.Add(imageFile);
+            }
+
+            imagesToReturn.Add(new ImageFile() { Url = "https://picsum.photos/200/300" });
+
+            return imagesToReturn;
+        }
+    }
+
+    private string GetImageSource(ImageFile imageFile)
+    {
+        string imageSrc = imageFile.Url;
+
+        if (string.IsNullOrEmpty(imageFile.Url) && imageFile.FileContent?.Length > 0)
+        {
+            imageSrc = imageFile.Base64Image;
+        }
+
+        return imageSrc;
+    }
+
+    void OnCarouselItemClicked(object sender, int indexClicked)
+    {
+        Console.WriteLine($"Carousel Index Clicked: {indexClicked}");
+    }
+}

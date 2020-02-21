@@ -182,7 +182,17 @@ app {
     }
 }
 
-.blazor-carousel-image  {
+.blazor-carousel-templated-item {
     height: 300px;
     max-height: 300px;
+}
+
+.blazor-carousel-image {
+    height: 300px;
+    max-height: 300px;
+}
+
+.blazor-carousel-templated-item img {
+    width: 100%;
+    height: 100%;
 }
