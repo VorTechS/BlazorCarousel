@@ -14,41 +14,44 @@
             @ResetRenderCounter();
         </div>
 
-        <div class="blazor-carousel-nav-container">
-            <div class="blazor-carousel-arrow-container float-left ml-2">
-                <div class="blazor-carousel-control-nav">
-                    @if (_activeImageIndex > 0 && imageset.Count() > 1)
-                    {
-                        <a class="blazor-carousel-control-prev" @onclick="OnPreviousClicked">
-                            <span class="carousel-control-prev-icon"></span>
-                        </a>
-                    }
+        @if (ShowNavigation)
+        {
+            <div class="blazor-carousel-nav-container">
+                <div class="blazor-carousel-arrow-container float-left ml-2">
+                    <div class="blazor-carousel-control-nav">
+                        @if (_activeImageIndex > 0 && imageset.Count() > 1)
+                        {
+                            <a class="blazor-carousel-control-prev" @onclick="OnPreviousClicked">
+                                <span class="carousel-control-prev-icon"></span>
+                            </a>
+                        }
+                    </div>
+                </div>
+
+                <div class="blazor-carousel-indicators-container mt-2">
+                    <ol>
+                        @for (int indicatorIndex = 0; indicatorIndex < imageset.Count; indicatorIndex++)
+                        {
+                            int copiedIndex = indicatorIndex;
+                            <li class="blazor-carousel-indicator @GetIndicatorState()" @onclick="() => SetActiveImageIndex(copiedIndex)" blazor-indicator-index="@_carouselRenderIndex">&nbsp;</li>
+                        }
+                    </ol>
+                </div>
+
+                <div class="blazor-carousel-arrow-container float-right mr-2">
+                    <div class="blazor-carousel-control-nav">
+                        @if (_activeImageIndex < imageset.Count() - 1 && imageset.Count() > 1)
+                        {
+                            <a class="blazor-carousel-control-next" @onclick="OnNextClicked">
+                                <span class="carousel-control-next-icon"></span>
+                            </a>
+                        }
+                    </div>
                 </div>
             </div>
 
-            <div class="blazor-carousel-indicators-container mt-2">
-                <ol>
-                    @for (int indicatorIndex=0; indicatorIndex < imageset.Count; indicatorIndex++)
-                    {
-                        int copiedIndex = indicatorIndex;
-                        <li class="blazor-carousel-indicator @GetIndicatorState()" @onclick="() => SetActiveImageIndex(copiedIndex)" blazor-indicator-index="@_carouselRenderIndex">&nbsp;</li>
-                    }
-                </ol>
-            </div>
-
-            <div class="blazor-carousel-arrow-container float-right mr-2">
-                <div class="blazor-carousel-control-nav">
-                    @if (_activeImageIndex < imageset.Count() - 1 && imageset.Count() > 1)
-                    {
-                        <a class="blazor-carousel-control-next" @onclick="OnNextClicked">
-                            <span class="carousel-control-next-icon"></span>
-                        </a>
-                    }
-                </div>
-            </div>
-        </div>
-
-        @ResetRenderCounter();
+            @ResetRenderCounter();
+        }
     }
 </div>
 
@@ -78,13 +81,17 @@
     [Parameter]
     public CarouselItemClicked OnCarouselItemClicked { get; set; }
 
+    [Parameter]
+    public bool ShowNavigation { get; set; } = true;
+
     private int _carouselRenderIndex = -1;
     private int _activeImageIndex = 0;
     private Timer _scrollTimer = null;
 
     protected override async Task OnParametersSetAsync()
     {
-        if ((this.AutoScrollInterval ?? 0) > 0)     {
+        if ((this.AutoScrollInterval ?? 0) > 0)
+        {
 
             int scrollMilliseconds = ((int)(this.AutoScrollInterval)) * 1000;
 
@@ -93,7 +100,8 @@
             if (_scrollTimer == null)
             {
                 _scrollTimer = new Timer();
-                _scrollTimer.Elapsed += (o, e) => {
+                _scrollTimer.Elapsed += (o, e) =>
+                {
 
                     _activeImageIndex += 1;
 
@@ -102,7 +110,8 @@
                         _activeImageIndex = 0;
                     }
 
-                    this.InvokeAsync(() => {
+                    this.InvokeAsync(() =>
+                    {
                         this.StateHasChanged();
                     });
                 };
@@ -173,7 +182,8 @@
     {
         string imageSrc = imageFile.Url;
 
-        if (string.IsNullOrEmpty(imageFile.Url) && imageFile.FileContent?.Length > 0) {
+        if (string.IsNullOrEmpty(imageFile.Url) && imageFile.FileContent?.Length > 0)
+        {
             imageSrc = imageFile.Base64Image;
         }
 

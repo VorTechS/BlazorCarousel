@@ -8,20 +8,25 @@
 
 @inject IWebHostEnvironment Environment
 
-<div class="mt-2">
+<div class="mt-3">
     <label>Image Carousel, no parameters other than imageset and CSSClass set:</label><span class="ml-2 "></span>
     <Carousel imageset="@AssetImages" CssClass="col-12"></Carousel>
 </div>
 
-<div class="mt-2">
+<div class="mt-3">
     <label>Image Carousel, with Click handler:</label><span class="ml-2 "></span>
     <Carousel imageset="@AssetImages" CssClass="col-12" OnCarouselItemClicked="OnCarouselItemClicked"></Carousel>
 
 </div>
 
-<div class="mt-2">
+<div class="mt-3">
     <label>Image Carousel, with Click handler and auto-scroll set:</label><span class="ml-2 "></span>
     <Carousel imageset="@AssetImages" CssClass="col-12" AutoScrollInterval="5" OnCarouselItemClicked="OnCarouselItemClicked"></Carousel>
+</div>
+
+<div class="mt-3 mb-3">
+    <label>Image Carousel, with Click handler and auto-scroll set, but Navigation turned off:</label><span class="ml-2 "></span>
+    <Carousel imageset="@AssetImages" CssClass="col-12" AutoScrollInterval="5" OnCarouselItemClicked="OnCarouselItemClicked" ShowNavigation="false"></Carousel>
 </div>
 
 @code
