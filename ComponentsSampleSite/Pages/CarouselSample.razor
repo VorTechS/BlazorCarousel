@@ -8,11 +8,20 @@
 
 @inject IWebHostEnvironment Environment
 
-<div class="form-group row">
-    <div class="col-sm-9">
-        <label for="eventImages">A carousel of images:</label><span class="ml-2 "></span>
-        <Carousel imageset="@AssetImages" CssClass="col-12" AutoScrollInterval="5"></Carousel>
-    </div>
+<div class="mt-2">
+    <label>Image Carousel, no parameters other than imageset and CSSClass set:</label><span class="ml-2 "></span>
+    <Carousel imageset="@AssetImages" CssClass="col-12"></Carousel>
+</div>
+
+<div class="mt-2">
+    <label>Image Carousel, with Click handler:</label><span class="ml-2 "></span>
+    <Carousel imageset="@AssetImages" CssClass="col-12" OnCarouselItemClicked="OnCarouselItemClicked"></Carousel>
+
+</div>
+
+<div class="mt-2">
+    <label>Image Carousel, with Click handler and auto-scroll set:</label><span class="ml-2 "></span>
+    <Carousel imageset="@AssetImages" CssClass="col-12" AutoScrollInterval="5" OnCarouselItemClicked="OnCarouselItemClicked"></Carousel>
 </div>
 
 @code
@@ -41,6 +50,11 @@
 
             return imagesToReturn;
         }
+    }
+
+    void OnCarouselItemClicked(object sender, int indexClicked)
+    {
+        Console.WriteLine($"Carousel Index Clicked: {indexClicked}");
     }
 }
 

@@ -54,7 +54,7 @@
     height: 30px;    
     text-align:center;
     position: absolute;
-    bottom: 10px;
+    bottom: 0px;
     left: 0;
 }
 
@@ -70,4 +70,8 @@
     width: 24px;
     height: 24px;
     cursor:pointer;
+}
+
+.blazor-carousel-pointer {
+    cursor: pointer;
 }

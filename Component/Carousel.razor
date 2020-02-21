@@ -6,8 +6,8 @@
         <div class="blazor-carousel-inner">
             @foreach (var imageFile in imageset)
             {
-                <div class="blazor-carousel-image @GetImageState()">
-                    <img class="d-block center @(ImageClass)" src="@GetImageSource(imageFile)" alt="@imageFile.FileName">
+                <div class="blazor-carousel-image @GetClasses()">
+                    <img class="d-block center @(ImageClass)" src="@GetImageSource(imageFile)" alt="@imageFile.FileName" @onclick="() => { OnCarouselItemClicked?.Invoke(this, _activeImageIndex); }">
                 </div>
             }
 
@@ -73,6 +73,10 @@
     [Parameter]
     public int? AutoScrollInterval { get; set; }
 
+    public delegate void CarouselItemClicked(object sender, int index);
+
+    [Parameter]
+    public CarouselItemClicked OnCarouselItemClicked { get; set; }
 
     private int _carouselRenderIndex = -1;
     private int _activeImageIndex = 0;
@@ -98,7 +102,7 @@
                         _activeImageIndex = 0;
                     }
 
-                    this.InvokeAsync(() => { 
+                    this.InvokeAsync(() => {
                         this.StateHasChanged();
                     });
                 };
@@ -135,7 +139,7 @@
         this.StateHasChanged();
     }
 
-    private string GetImageState()
+    private string GetClasses()
     {
         string imageStateClass = "hidden";
 
@@ -146,7 +150,9 @@
             imageStateClass = null;
         }
 
-        return imageStateClass;
+        imageStateClass += OnCarouselItemClicked != null ? " blazor-carousel-pointer" : "";
+        return imageStateClass.Trim();
+
     }
 
     private string GetIndicatorState()
