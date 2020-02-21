@@ -1,0 +1,46 @@
+﻿@page "/carousel"
+
+@using Components;
+@using System.Collections;
+@using System.IO;
+@using MimeMapping;
+@using Microsoft.AspNetCore.Hosting;
+
+@inject IWebHostEnvironment Environment
+
+<div class="form-group row">
+    <div class="col-sm-9">
+        <label for="eventImages">A carousel of images:</label><span class="ml-2 "></span>
+        <Carousel imageset="@AssetImages" CssClass="col-12"></Carousel>
+    </div>
+</div>
+
+@code
+{
+    List<ImageFile> AssetImages
+    {
+        get
+        {
+            List<ImageFile> imagesToReturn = new List<ImageFile>();
+
+            var assetFiles = Environment.WebRootFileProvider.GetDirectoryContents("Assets");
+
+            foreach (var assetFile in assetFiles)
+            {
+                ImageFile imageFile = new ImageFile()
+                {
+                    FileName = assetFile.Name,
+                    MimeType = MimeMapping.MimeUtility.GetMimeMapping(assetFile.Name)
+                };
+
+                imageFile.FileContent = File.ReadAllBytes(assetFile.PhysicalPath);
+                imagesToReturn.Add(imageFile);
+            }
+
+            imagesToReturn.Add(new ImageFile() { Url = "https://picsum.photos/200/300" });
+
+            return imagesToReturn;
+        }
+    }
+}
+
