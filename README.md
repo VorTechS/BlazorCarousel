@@ -18,6 +18,8 @@ Add the component to your Razor page using the following lines:
 
         @using Components;
 
+**The Old Image Carousel**
+
 For the old carousel, add the following line to create an instance:
 
         <Carousel imageset="@AssetImages" CssClass="col-12" AutoScrollInterval="5"></Carousel>
@@ -43,6 +45,7 @@ AutoScrollInterval: the number of seconds to elapse before the next image in the
 ShowNavigation: (Defaulted to true) allows the bottom navigation panel to be displayed or hidden
 
 
+**The new Templated Carousel Component**
 
 For the templated carousel, add lines similar to the following:
 
