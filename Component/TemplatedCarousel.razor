@@ -89,6 +89,8 @@
     [Parameter]
     public bool ShowNavigation { get; set; } = true;
 
+    public int ActiveItemIndex => _activeItemIndex;
+
     private int _carouselRenderIndex = -1;
     private int _activeItemIndex = 0;
     private Timer _scrollTimer = null;
