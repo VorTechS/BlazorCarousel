@@ -68,8 +68,6 @@ CssClass: additional CSS classes that you want to apply to the carousel outer co
 
 OnCarouselItemClicked: event handler for when an item is clicked (also changes the cursor to reflect an image can be clicked)
 
-This code is Open Source!
-
 AutoScrollInterval: the number of seconds to elapse before the next image in the sequence is displayed automatically
 
 ShowNavigation: (Defaulted to true) allows the bottom navigation panel to be displayed or hidden
