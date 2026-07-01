@@ -73,3 +73,5 @@ This code is Open Source!
 AutoScrollInterval: the number of seconds to elapse before the next image in the sequence is displayed automatically
 
 ShowNavigation: (Defaulted to true) allows the bottom navigation panel to be displayed or hidden
+
+This project is tested with BrowserStack.
