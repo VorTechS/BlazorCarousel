@@ -72,4 +72,4 @@ AutoScrollInterval: the number of seconds to elapse before the next image in the
 
 ShowNavigation: (Defaulted to true) allows the bottom navigation panel to be displayed or hidden
 
-This project is tested with BrowserStack.
+This project is tested with BrowserStack
